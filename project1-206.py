@@ -5,6 +5,29 @@ from datetime import date
 
 
 def getData(file):
+	inFile=open(file,"r")
+	dictlist=[]
+	l=inFile.readline()
+	lines=inFile.readlines()
+
+	for line in lines:
+		newdict={}
+		values=line.split(",")
+		First=values[0]
+		Last=values[1]
+		Email=values[2]
+		Class=values[3]
+		DOB=values[4]
+		l=inFile.readline()
+
+		newdict["First"]=First
+		newdict["Last"]=Last
+		newdict["Email"]=Email
+		newdict["Class"]=Class
+		newdict["DOB"]=DOB
+		dictlist.append(newdict)
+	inFile.close()
+	return dictlist
 # get a list of dictionary objects from the file
 #Input: file name
 #Ouput: return a list of dictionary objects where
