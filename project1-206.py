@@ -48,9 +48,31 @@ def mySort(data,col):
 
 
 def classSizes(data):
+	years = [x["Class"] for x in data]
+	#print(years)
+	tuple_lst=[]
+	fresh_class_counter=0
+	soph_class_counter=0
+	jun_class_counter=0
+	senior_class_counter=0
+	for year in years:
+		if year == "Freshman":
+			fresh_class_counter += 1
+		if year == "Sophomore":
+			soph_class_counter += 1
+		if year == "Junior":
+			jun_class_counter += 1
+		if year == "Senior":
+			senior_class_counter += 1
+	tuple_lst.append(("Freshman", fresh_class_counter))
+	tuple_lst.append(("Sophomore", soph_class_counter))
+	tuple_lst.append(("Junior", jun_class_counter))
+	tuple_lst.append(("Senior", senior_class_counter))
+	return(sorted(tuple_lst, key = lambda x: x[1], reverse = True))
 # Create a histogram
 # Input: list of dictionaries
-# Output: Return a list of tuples sorted by the number of students in that class in
+# Output: Return a list of tuples sorted by the number of students in that class
+#in
 # descending order
 # [('Senior', 26), ('Junior', 25), ('Freshman', 21), ('Sophomore', 18)]
 
@@ -58,6 +80,25 @@ def classSizes(data):
 
 
 def findMonth(a):
+	months=[int(x["DOB"].split("/")[0]) for x in a]
+	print(months)
+	month_lst=[]
+	accum_dict={}
+	tup_list=[]
+	for x in months:
+		month_lst.append(x)
+	for month in month_lst:
+		if month not in accum_dict.keys():
+			accum_dict[month] = 0
+		accum_dict[month] += 1
+	for x in accum_dict.keys():
+		tup = (x, accum_dict[x])
+		tup_list.append(tup)
+	#print(tup_list)
+	sorted_tup_list=sorted(tup_list, key = lambda x: x[1], reverse=True)
+	#print(sorted_tup_list)
+	return sorted_tup_list[0][0]
+
 # Find the most common birth month form this data
 # Input: list of dictionaries
 # Output: Return the month (1-12) that had the most births in the data
@@ -65,6 +106,16 @@ def findMonth(a):
 	pass
 
 def mySortPrint(a,col,fileName):
+	outFile=open(fileName,"w")
+	sortedList=sorted(a, key=lambda x: x[col])
+	for x in sortedList:
+		firstName=x['First']
+		lastName=x['Last']
+		eMail=x['Email']
+		newSort=(firstName + "," + lastName + "," + eMail + '\n')
+		outFile.write(newSort)
+	outFile.close()
+
 #Similar to mySort, but instead of returning single
 #Student, the sorted data is saved to a csv file.
 # as fist,last,email
@@ -74,6 +125,7 @@ def mySortPrint(a,col,fileName):
 	pass
 
 def findAge(a):
+	
 # def findAge(a):
 # Input: list of dictionaries
 # Output: Return the average age of the students and round that age to the nearest
